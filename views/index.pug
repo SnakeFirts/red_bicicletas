@@ -1,9 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  #main_map
+  header.encabezado
+    h1= title
+    p Welcome to #{title}
+  main.contenedor
+    #main_map
+    aside.panel
+      h2 Bicicletas
+      ul#lista_bicis
+      p.nota Haz clic en una bici para verla en el mapa
 
 block scripts
   script(src='/javascripts/mapa.js')
