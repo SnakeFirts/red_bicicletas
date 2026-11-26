@@ -1,48 +1,72 @@
-Red de Bicicletas
+# Red de Bicicletas
 
-Este proyecto lo hice para el modulo de Node.js y Express del curso. Es una aplicacion web que muestra un mapa de Tegucigalpa con marcadores donde estan ubicadas unas bicicletas. Los datos de las bicicletas se guardan en memoria (todavia no hay base de datos) y se pueden administrar a traves de una API.
+Proyecto del módulo de **Node.js y Express**. Es una aplicación web que muestra un mapa de Tegucigalpa con marcadores en las ubicaciones de unas bicicletas, y una API para administrarlas. Los datos se guardan **en memoria** (todavía no hay base de datos).
 
-Tecnologias que use
+## Tecnologías
+
 - Node.js y Express
-- Pug como motor de vistas
-- Leaflet y OpenStreetMap para el mapa
-- Nodemon para el desarrollo
-- Git y GitHub para el control de versiones
-- Postman para probar la API
+- Pug (motor de vistas)
+- Leaflet y OpenStreetMap (mapa)
+- Nodemon (desarrollo)
+- Git y GitHub (control de versiones)
+- Postman (pruebas de la API)
 
-Como correrlo
-1. Clonar el repositorio:
-   git clone https://github.com/SnakeFirts/red_bicicletas.git
-2. Entrar a la carpeta:
-   cd red_bicicletas
-3. Instalar las dependencias:
-   npm install
-4. Levantar el servidor:
-   npm start
-   (o npm run devstart para que se reinicie solo al guardar cambios)
-5. Abrir http://localhost:3000 en el navegador
+## Cómo correrlo
 
-Que se ve en la pagina
-Al abrir la pagina aparece el mensaje de bienvenida de Express y un mapa centrado en Tegucigalpa. En el mapa hay un marcador por cada bicicleta que esta guardada en el modelo.
+```bash
+git clone https://github.com/SnakeFirts/red_bicicletas.git
+cd red_bicicletas
+npm install
+npm start
+```
 
-Estructura del proyecto
-- models/bicicleta.js: modelo de la bicicleta y la coleccion en memoria. Ya trae dos bicicletas de prueba cerca del centro del mapa.
-- controllers/api/bicicletaControllerAPI.js: logica de cada endpoint.
-- routes/api/bicicletas.js: rutas de la API.
-- public/javascripts/mapa.js: crea el mapa y pone los marcadores.
-- views/: vistas en Pug.
+Para desarrollo, con reinicio automático al guardar cambios:
 
-Endpoints de la API
-GET    /api/bicicletas          Lista todas las bicicletas
-POST   /api/bicicletas/create   Crea una bicicleta
-PUT    /api/bicicletas/update   Actualiza una bicicleta existente
-DELETE /api/bicicletas/delete   Elimina una bicicleta por su id
+```bash
+npm run devstart
+```
 
-Los datos se envian en el body como JSON. Ejemplo para crear:
+Luego abre <http://localhost:3000> en el navegador.
+
+## Qué se ve en la página
+
+Al abrir la página aparece el mensaje de bienvenida de Express y un mapa centrado en Tegucigalpa. Hay un marcador por cada bicicleta del modelo, y al hacer clic en uno sale un popup con su color y modelo. A un lado hay un panel con la lista de bicicletas: al hacer clic en una, el mapa se acerca a su ubicación.
+
+## Estructura del proyecto
+
+| Archivo | Para qué sirve |
+|---|---|
+| `models/bicicleta.js` | Modelo de bicicleta y colección en memoria (trae 2 bicis de prueba cerca del centro del mapa) |
+| `controllers/api/bicicletaControllerAPI.js` | Lógica de cada endpoint |
+| `routes/api/bicicletas.js` | Rutas de la API |
+| `public/javascripts/mapa.js` | Crea el mapa, los marcadores y la lista lateral |
+| `views/` | Vistas en Pug |
+
+## API
+
+| Método | Ruta | Qué hace |
+|---|---|---|
+| GET | `/api/bicicletas` | Lista todas las bicicletas |
+| POST | `/api/bicicletas/create` | Crea una bicicleta |
+| PUT | `/api/bicicletas/update` | Actualiza una bicicleta existente |
+| DELETE | `/api/bicicletas/delete` | Elimina una bicicleta por su id |
+
+Los datos se envían en el body como JSON. Ejemplo para crear:
+
+```json
 { "id": 3, "color": "verde", "modelo": "urbana", "lat": 14.07, "lng": -87.19 }
+```
 
-Para actualizar se usa el mismo formato con el id de una bicicleta que ya exista. Para eliminar solo se manda el id:
+Para actualizar se usa el mismo formato con el id de una bici que ya exista. Para eliminar solo se manda el id:
+
+```json
 { "id": 3 }
+```
 
-Notas
-Como los datos estan en memoria, al reiniciar el servidor se pierden los cambios y vuelven las dos bicicletas iniciales.
+## Tests con Postman
+
+Probé los cuatro endpoints en una colección llamada **Red Bicicletas**. El GET devuelve las bicis en JSON, el POST agrega una nueva, el PUT cambia sus datos y el DELETE la elimina (responde `204`, sin contenido).
+
+## Notas
+
+Como los datos están en memoria, al reiniciar el servidor se pierden los cambios y vuelven las dos bicis iniciales.
